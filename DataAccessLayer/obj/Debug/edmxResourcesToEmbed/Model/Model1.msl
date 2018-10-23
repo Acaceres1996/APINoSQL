@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dbobligatoriopersonalModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="IsTypeOf(db.obligatoriopersonalModel.Employee)">
+        <MappingFragment StoreEntitySet="EmployeesTPH">
+          <ScalarProperty Name="EmployeeId" ColumnName="EMP_ID" />
+          <ScalarProperty Name="StartDate" ColumnName="START_DATE" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(db.obligatoriopersonalModel.PartTimeEmployee)">
+        <MappingFragment StoreEntitySet="EmployeesTPH">
+          <ScalarProperty Name="HourlyRate" ColumnName="RATE" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EMP_ID" />
+          <Condition ColumnName="TYPE_EMP" Value="0" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(db.obligatoriopersonalModel.FullTimeEmployee)">
+        <MappingFragment StoreEntitySet="EmployeesTPH">
+          <ScalarProperty Name="EmployeeId" ColumnName="EMP_ID" />
+          <ScalarProperty Name="SALARY" ColumnName="SALARY" />
+          <Condition ColumnName="TYPE_EMP" Value="1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeHours">
+      <EntityTypeMapping TypeName="db.obligatoriopersonalModel.EmployeeHour">
+        <MappingFragment StoreEntitySet="EmployeeHours">
+          <ScalarProperty Name="hours" ColumnName="hours" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

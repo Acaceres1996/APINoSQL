@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db.obligatoriopersonalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="EmployeeHours">
+    <Key>
+      <PropertyRef Name="EMP_ID" />
+      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="EndDate" />
+    </Key>
+    <Property Name="EMP_ID" Type="int" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="hours" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeesTPH">
+    <Key>
+      <PropertyRef Name="EMP_ID" />
+    </Key>
+    <Property Name="EMP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="START_DATE" Type="datetime" Nullable="false" />
+    <Property Name="SALARY" Type="int" />
+    <Property Name="RATE" Type="float" />
+    <Property Name="TYPE_EMP" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_EmployeeHours_ToTable">
+    <End Role="EmployeesTPH" Type="Self.EmployeesTPH" Multiplicity="1" />
+    <End Role="EmployeeHours" Type="Self.EmployeeHours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeesTPH">
+        <PropertyRef Name="EMP_ID" />
+      </Principal>
+      <Dependent Role="EmployeeHours">
+        <PropertyRef Name="EMP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbobligatoriopersonalModelStoreContainer">
+    <EntitySet Name="EmployeeHours" EntityType="Self.EmployeeHours" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeesTPH" EntityType="Self.EmployeesTPH" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_EmployeeHours_ToTable" Association="Self.FK_EmployeeHours_ToTable">
+      <End Role="EmployeesTPH" EntitySet="EmployeesTPH" />
+      <End Role="EmployeeHours" EntitySet="EmployeeHours" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

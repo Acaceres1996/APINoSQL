@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db.obligatoriopersonalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Employee" Abstract="true">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+    </Key>
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="EmployeeHours" Relationship="db.obligatoriopersonalModel.FK_EmployeeHours_ToTable" FromRole="Employee" ToRole="EmployeeHour" />
+  </EntityType>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Employees" EntityType="db.obligatoriopersonalModel.Employee" />
+    <EntitySet Name="EmployeeHours" EntityType="db.obligatoriopersonalModel.EmployeeHour" />
+    <AssociationSet Name="FK_EmployeeHours_ToTable" Association="db.obligatoriopersonalModel.FK_EmployeeHours_ToTable">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="EmployeeHour" EntitySet="EmployeeHours" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="PartTimeEmployee" BaseType="db.obligatoriopersonalModel.Employee">
+    <Property Name="HourlyRate" Type="Double" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FullTimeEmployee" BaseType="db.obligatoriopersonalModel.Employee">
+    <Property Name="SALARY" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeeHour">
+    <Key>
+      <PropertyRef Name="EMP_ID" />
+      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="EndDate" />
+    </Key>
+    <Property Name="EMP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="hours" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EmployeesTPH" Relationship="db.obligatoriopersonalModel.FK_EmployeeHours_ToTable" FromRole="EmployeeHour" ToRole="Employee" />
+  </EntityType>
+  <Association Name="FK_EmployeeHours_ToTable">
+    <End Type="db.obligatoriopersonalModel.Employee" Role="Employee" Multiplicity="1" />
+    <End Type="db.obligatoriopersonalModel.EmployeeHour" Role="EmployeeHour" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="EmployeeHour">
+        <PropertyRef Name="EMP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
